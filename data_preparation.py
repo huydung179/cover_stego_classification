@@ -74,8 +74,8 @@ def prepare_train_valid_autoencoder(data_dir: str, batch_size: int, seed: int = 
     cover_dir = data_dir + '/cover'
     stego_dir = data_dir + '/stego'
 
-    cover_paths = [cover_dir + '/' + f for f in os.listdir(cover_dir)]
-    stego_paths = [stego_dir + '/' + f for f in os.listdir(stego_dir)]
+    cover_paths = sorted([cover_dir + '/' + f for f in os.listdir(cover_dir)])
+    stego_paths = sorted([stego_dir + '/' + f for f in os.listdir(stego_dir)])
 
     # Load the dataset using ImageFolder
     dataset = PairDataset(stego_paths, cover_paths, transform=TRAIN_TF)
