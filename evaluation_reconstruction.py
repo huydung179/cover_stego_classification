@@ -76,10 +76,9 @@ def eval_model(model: torch.nn.Module,
     """
 
     # Validate
-    valid_loss, valid_acc = validate(model, criterion, test_loader, device)
+    valid_loss = validate(model, criterion, test_loader, device)
 
-    print(f'Test loss: {valid_loss:.4f}, '
-          f'Test accuracy: {valid_acc:.4f}')
+    print(f'Test loss: {valid_loss:.4f}')
 
 
 def main():
