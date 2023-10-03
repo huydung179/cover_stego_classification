@@ -73,13 +73,13 @@ def validate(model: torch.nn.Module,
              valid_loader: torch.utils.data.DataLoader,
              device: torch.device) -> (float, float):
     """
-    Validate the model and return average loss and f1 score.
+    Validate the model and return average loss and accuracy.
 
     :param model: Trained PyTorch model
     :param criterion: Loss function used
     :param valid_loader: DataLoader for validation data
     :param device: Computation device ('cuda' or 'cpu')
-    :return: average validation loss, f1 score
+    :return: average validation loss, accuracy
     """
     model.eval()
     loss = 0
@@ -92,7 +92,7 @@ def validate(model: torch.nn.Module,
             output = model(images).squeeze()
             loss += criterion(output, labels).item()
 
-    # Average loss and f1 score calculation
+    # Average loss and accuracy calculation
     loss /= len(valid_loader)
 
     return loss

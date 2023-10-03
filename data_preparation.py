@@ -109,3 +109,23 @@ def prepare_test(data_dir: str, batch_size: int) -> DataLoader:
     test_dataset = datasets.ImageFolder(root=data_dir, transform=VALID_TF)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
     return test_loader
+
+
+def prepare_test_autoencoder(data_dir: str, batch_size: int) -> DataLoader:
+    """
+    Prepare DataLoader for the test dataset.
+    
+    :param data_dir: Directory path containing the test data.
+    :param batch_size: Size of each batch.
+    :return: Test DataLoader object.
+    """
+    cover_dir = data_dir + '/cover'
+    stego_dir = data_dir + '/stego'
+
+    cover_paths = [cover_dir + '/' + f for f in os.listdir(cover_dir)]
+    stego_paths = [stego_dir + '/' + f for f in os.listdir(stego_dir)]
+
+    # Load the dataset using ImageFolder
+    dataset = PairDataset(stego_paths, cover_paths, transform=VALID_TF)
+    test_loader = DataLoader(dataset, batch_size=batch_size, shuffle=False)
+    return test_loader

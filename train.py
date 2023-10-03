@@ -71,13 +71,13 @@ def validate(model: torch.nn.Module,
              valid_loader: torch.utils.data.DataLoader,
              device: torch.device) -> (float, float):
     """
-    Validate the model and return average loss and f1 score.
+    Validate the model and return average loss and accuracy.
 
     :param model: Trained PyTorch model
     :param criterion: Loss function used
     :param valid_loader: DataLoader for validation data
     :param device: Computation device ('cuda' or 'cpu')
-    :return: average validation loss, f1 score
+    :return: average validation loss, accuracy
     """
     model.eval()
     loss = 0
@@ -91,11 +91,11 @@ def validate(model: torch.nn.Module,
             output = model(images).squeeze()
             loss += criterion(output, labels).item()
 
-            # Store predictions and targets for calculating f1 score
+            # Store predictions and targets for calculating accuracy
             outputs.append(output.detach().cpu().numpy())
             targets.append(labels.detach().cpu().numpy())
 
-    # Average loss and f1 score calculation
+    # Average loss and accuracy calculation
     loss /= len(valid_loader)
     outputs = np.concatenate(outputs)
     targets = np.concatenate(targets)
@@ -148,7 +148,7 @@ def train_model(model: torch.nn.Module,
         if valid_loss < cur_loss:
             cur_loss = valid_loss
             prog_bar.write(
-                f'Epoch: {epoch+1} - Valid loss decreased ({cur_loss:.3f}) - Valid F1 score ({valid_acc:.3f}). Saving model ...')
+                f'Epoch: {epoch+1} - Valid loss decreased ({cur_loss:.3f}) - Valid accuracy ({valid_acc:.3f}). Saving model ...')
             torch.save(model.state_dict(), os.path.join(
                 args.save_dir, f'{save_name}.pt'))
 
