@@ -135,7 +135,7 @@ def train_model(model: torch.nn.Module,
         # Train and validate
         train_one_epoch(model, criterion, optimizer,
                         train_loader, prog_bar, device)
-        valid_loss, valid_acc = validate(model, criterion, valid_loader, device)
+        valid_loss = validate(model, criterion, valid_loader, device)
 
         # Save the model if validation loss improves
         if valid_loss < cur_loss:
