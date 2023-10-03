@@ -71,7 +71,7 @@ def train_one_epoch(model: torch.nn.Module,
 def validate(model: torch.nn.Module,
              criterion: torch.nn.Module,
              valid_loader: torch.utils.data.DataLoader,
-             device: torch.device) -> (float, float):
+             device: torch.device) -> float:
     """
     Validate the model and return average loss and accuracy.
 

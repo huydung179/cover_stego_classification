@@ -22,13 +22,15 @@ def parse_arguments():
                         help='Path to of output model.')
     parser.add_argument('--batch_size', type=int, default=128,
                         help='Batch size for testing.')
+    parser.add_argument('--encoded_space_dim', type=int, default=128,
+                        help='Dimension of the encoded space.')
     return parser.parse_args()
 
 
 def validate(model: torch.nn.Module,
              criterion: torch.nn.Module,
              test_loader: torch.utils.data.DataLoader,
-             device: torch.device) -> (float, float):
+             device: torch.device) -> float:
     """
     Validate the model and return average loss and accuracy.
 
@@ -84,7 +86,7 @@ def main():
     # Initialize the device, model, loss function, optimizer, and data loaders
     device = initialize_device()
     print(f'Using device: {device}')
-    model = AutoEncoder()
+    model = AutoEncoder(args.encoded_space_dim)
     model.load_state_dict(torch.load(args.model_path))
     model.to(device)
     criterion = torch.nn.L1Loss()
